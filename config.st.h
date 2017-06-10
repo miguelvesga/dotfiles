@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-#define  FONT(NAME, SIZE) char font[] = NAME ":pixelsize=" #SIZE ":antialias=true:hinting=true:hintstyle=hintmedium:style=Normal";
+#define  FONT(NAME, SIZE) char font[] = NAME ":pixelsize=" #SIZE ":antialias=true:hinting=true:hintstyle=hintmedium:rgba=rgb:lcdfilter=lcddefault:dpi=96:style=Normal";
 // char font[] = "Input Mono:pixelsize=11:antialias=true:hinting=true:hintstyle=hintfull:style=Medium";
 // char font[] = "Ubuntu Mono:pixelsize=12:antialias=true:hinting=true:hintstyle=hintfull:style=Bold";
 // char font[] = "Source Code Pro:pixelsize=10:antialias=true:hinting=true:hintstyle=hintslight:style=Medium";
@@ -14,10 +14,10 @@ FONT("Input Mono", 11)
 
 /* disable bold, italic and roman fonts globally */
 int disablebold = 1;
-int disableitalic = 1;
-int disableroman = 1;
+int disableitalic = 0;
+int disableroman = 0;
 
-int borderpx = 2;
+int borderpx = 0;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -92,87 +92,42 @@ char termname[] = "st-256color";
  *	stty tabs
  */
 static unsigned int tabspaces = 4;
-/*
-const char *colorname[] = {
-	"#111111", // 0: black
-	"#b91f29", // 1: red
-	"#2fdc32", // 2: green
-	"#d9dc2f", // 3: yellow
-	"#322fdc", // 4: blue
-	"#ae81ff", // 5: magenta
-	"#2fdc89", // 6: cyan
-	"#dddddd", // 7: white
 
-	"#646464", // 0: brblack
-	"#dc322f", // 1: brred
-	"#83dc2f", // 2: brgreen
-	"#dadc2f", // 3: bryellow
-	"#2f83dc", // 4: brblue
-	"#dc2f83", // 5: brmagenta
-	"#2fdadc", // 6: brcyan
-	"#fbfbfb", // 7: brwhite
-
-	[255] = 0
-};*/
+/* bg opacity */
+unsigned int alpha = 0xbb;
 
 // monokai
 const char *colorname[] = {
-	"#101011", // 0: black *
-	"#b91f29", // 1: red *
+	"#10100d", // 0: black *
+	"#cf232e", // 1: red *
 	"#529b2f", // 2: green *
 	"#dadc2f", // 3: yellow *
 	"#1f29b9", // 4: blue
-	//"#892fdc", // 5: magenta *
 	"#ae81ff", // 5: magenta *
 	"#61b8d0", // 6: cyan *
-	"#fefffe", // 7: white *
+	"#ffffff", // 7: white *
 
-	"#48484a", // 8: brblack *
+	"#686864", // 8: brblack *
 	"#fd971f", // 9: brred *
 	"#a6e22e", // 10: brgreen *
 	"#e6db74", // 11: bryellow *
 	"#1f76b9", // 12: brblue *
 	"#f92672", // 13: brmagenta *
 	"#4bffcf", // 14: brcyan *
-	"#fefffe", // 15: brwhite *
+	"#ffffff", // 15: brwhite *
 
-	[255] = 0
+	[255] = 0,
+	"black"
 };
-
-#if 0
-/* Terminal colors (16 first used in escape sequence) */
-const char *colorname[] = {
-  // 8 bright colors
-  "#fdf6e3",  /*  8: brblack */
-  "#cb4b16",  /*  9: brred */
-  "#93a1a1",  /* 10: brgreen  */
-  "#839496",  /* 11: bryellow  */
-  "#657b83",  /* 12: brblue  */
-  "#6c71c4",  /* 13: brmagenta  */
-  "#586e75",  /* 14: brcyan  */
-  "#002b36",  /* 15: brwhite  */
-
-  /* 8 normal colors */
-  "#eee8d5",  /*  0: black  */
-  "#dc322f",  /*  1: red */
-  "#859900",  /*  2: green */
-  "#b58900",  /*  3: yellow */
-  "#268bd2",  /*  4: blue */
-  "#d33682",  /*  5: magenta */
-  "#2aa198",  /*  6: cyan */
-  "#073642",  /*  7: white */
-
-  [255] = 0,
-};
-#endif
 
 /*
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
 unsigned int defaultfg = 7;
-unsigned int defaultbg = 0;
-unsigned int defaultcs = 256;
+//unsigned int defaultbg = 0;
+unsigned int defaultbg = 257;
+unsigned int defaultcs = 15;
 unsigned int defaultrcs = 257;
 
 /*
@@ -232,6 +187,8 @@ Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
 	{ TERMMOD,              XK_I,           iso14755,       {.i =  0} },
+	{ ShiftMask,			XK_Page_Up,		kscrollup,		{.i = -1} },
+	{ ShiftMask,			XK_Page_Down,	kscrolldown,	{.i = -1} },
 };
 
 /*
